@@ -59,3 +59,13 @@ library(BSDA)
   )
 ```
 
+![image](https://user-images.githubusercontent.com/94377420/170876723-abfcafb3-9b10-49b9-97ac-aa116b1dd1fc.png)
+
+#### 2c Buatlah kesimpulan berdasarkan P-Value yang dihasilkan! kesimpulan dari soal diatas adalah mobil yang digunakan rata ratanya lebih dari 20.000 km/tahun
+
+#### 3 Diketahui perusahaan memiliki seorang data analyst ingin memecahkan permasalahan pengambilan keputusan dalam perusahaan tersebut. Selanjutnya didapatkanlah data berikut dari perusahaan saham tersebut. Dari data diatas berilah keputusan serta kesimpulan yang didapatkan dari hasil diatas. Asumsikan nilai variancenya sama, apakah ada perbedaan pada rata-ratanya (α= 0.05)? Buatlah :
+
+![image](https://user-images.githubusercontent.com/94377420/170876974-88db3e1e-b970-4752-b98f-bef22805b4ee.png)
+
+
+
