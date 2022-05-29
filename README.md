@@ -46,7 +46,8 @@ t.tes(x,y, alternative = "two.sided", mu=0)
 
 #### 2. Diketahui bahwa mobil dikemudikan rata-rata lebih dari 20.000 kilometer per tahun. Untuk menguji klaim ini, 100 pemilik mobil yang dipilih secara acak diminta untuk mencatat jarak yang mereka tempuh. Jika sampel acak menunjukkan rata-rata 23.500 kilometer dan standar deviasi 3900 kilometer. (Kerjakan menggunakan 2 library seperti referensi pada modul).
 
-#### 2a Apakah Anda setuju dengan klaim tersebut? Setujuuuu
+#### 2a Apakah Anda setuju dengan klaim tersebut? 
+Setujuuuu
 #### 2b Jelaskan maksud dari output yang dihasilkan!
 
 ```
@@ -67,5 +68,87 @@ library(BSDA)
 
 ![image](https://user-images.githubusercontent.com/94377420/170876974-88db3e1e-b970-4752-b98f-bef22805b4ee.png)
 
+#### 3a H0 dan H1?
+```
+H0 = 9.50
+H1 = 10.98
+```
 
+#### 3b Hitung Sampel Statistik
+```
+tsum.test(
+  mean.x=3.64,
+  s.x = 1.67,
+  n.x = 19, 
+  mean.y =2.79,
+  s.y = 1.32,
+  n.y = 27, 
+  alternative = "greater",
+  var.equal = TRUE
+)
+```
+![3b](https://user-images.githubusercontent.com/94377420/170878847-c1ffbb9e-c6b7-4551-9d84-791a530aacbf.png)
+
+#### 3c Lakukan Uji Statistik (df =2)
+```
+library(mosaic)
+plotDist(dist = 't', df = 2, col = "yellow")
+```
+![3c](https://user-images.githubusercontent.com/94377420/170878941-185ae8e3-5bc8-486d-9714-1558c6f612a7.png)
+
+#### 3d Nilai Kritikal
+
+```
+qchisq(p = 0.05, df = 2, lower.tail = FALSE)
+```
+![image](https://user-images.githubusercontent.com/94377420/170878991-36fc51a7-bf34-4635-a079-e37966b64298.png)
+
+#### 3e Keputusan
+Hasil uji terletak di interval nilai kritikal, maka H0 tidak ditolak/sample tidak memiliki cukup bukti yang bertentangan dengan H0.
+
+#### 3f Kesimpulan
+kesimpulannya adalah 95% rata-rata saham di Bali dan di Bandung adalah sama.
+
+#### 4 Seorang Peneliti sedang meneliti spesies dari kucing di ITS . Dalam penelitiannya
+ia mengumpulkan data tiga spesies kucing yaitu kucing oren, kucing hitam dan
+kucing putih dengan panjangnya masing-masing.
+Jika :
+diketahui dataset https://intip.in/datasetprobstat1
+H0 : Tidak ada perbedaan panjang antara ketiga spesies atau rata-rata panjangnya
+sama
+Maka Kerjakan atau Carilah:
+
+#### 4a Buatlah masing masing jenis spesies menjadi 3 subjek "Grup" (grup 1,grup 2,grup 3). Lalu Gambarkan plot kuantil normal untuk setiap kelompok dan lihat apakah ada outlier utama dalam homogenitas varians.
+```
+myFile  <- read.table(url("https://rstatisticsandresearch.weebly.com/uploads/1/0/2/6/1026585/onewayanova.txt"))
+dim(myFile)
+head(myFile)
+attach(myFile)
+
+myFile$V1 <- as.factor(myFile$V1)
+myFile$V1 = factor(myFile$V1,labels = c("Kucing Oren","Kucing Hitam","Kucing Putih","Kucing Oren"))
+
+class(myFile$V1)
+
+group1 <- subset(myFile, V1=="Kucing Oren")
+group2 <- subset(myFile, V1=="Kucing Hitam")
+group3 <- subset(myFile, V1=="Kucing Putih")
+```
+
+#### 4b carilah atau periksalah Homogeneity of variances nya , Berapa nilai p yang didapatkan? , Apa hipotesis dan kesimpulan yang dapat diambil ?
+
+```
+bartlett.test(Length~V1, data=dataoneway)
+```
+
+#### 4c Untuk uji ANOVA (satu arah), buatlah model linier dengan Panjang versus Grup dan beri nama model tersebut model 1.
+
+```
+qqnorm(group1$Length)
+qqline(group1$Length)
+```
+
+#### 4d Dari Hasil Poin C, Berapakah nilai-p ? , Apa yang dapat Anda simpulkan dari H0?
+
+#### 4e Verifikasilah jawaban model 1 dengan Post-hoc test Tukey HSD, dari nilai p yang didapatkan apakah satu jenis kucing lebih panjang dari yang lain? Jelaskan.
 
