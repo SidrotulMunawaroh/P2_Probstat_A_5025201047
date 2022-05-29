@@ -1,32 +1,28 @@
-4a. Buatlah masing masing jenis spesies menjadi 3 subjek "Grup" (grup 1,grup
-2,grup 3). Lalu Gambarkan plot kuantil normal untuk setiap kelompok dan
-lihat apakah ada outlier utama dalam homogenitas varians.
+#3a H0 dan H1?
+H0 = 9.50
+H1 = 10.98
 
-myFile  <- read.table(url("https://rstatisticsandresearch.weebly.com/uploads/1/0/2/6/1026585/onewayanova.txt"))
-dim(myFile)
-head(myFile)
-attach(myFile)
+#3b Hitung Sampel Statistik
+tsum.test(
+  mean.x=3.64,
+  s.x = 1.67,
+  n.x = 19, 
+  mean.y =2.79,
+  s.y = 1.32,
+  n.y = 27, 
+  alternative = "greater",
+  var.equal = TRUE
+)
 
-myFile$V1 <- as.factor(myFile$V1)
-myFile$V1 = factor(myFile$V1,labels = c("Kucing Oren","Kucing Hitam","Kucing Putih","Kucing Oren"))
+#3c Lakukan Uji Statistik (df =2)
+library(mosaic)
+plotDist(dist = 't', df = 2, col = "yellow")
 
-class(myFile$V1)
+#3d Nilai Kritikal 
+qchisq(p = 0.05, df = 2, lower.tail = FALSE)
 
-group1 <- subset(myFile, V1=="Kucing Oren")
-group2 <- subset(myFile, V1=="Kucing Hitam")
-group3 <- subset(myFile, V1=="Kucing Putih")
+#3e Keputusan
+Hasil uji terletak di interval nilai kritikal, maka H0 tidak ditolak/sample tidak memiliki cukup bukti yang bertentangan dengan H0.
 
-4b. carilah atau periksalah Homogeneity of variances nya , Berapa nilai p yang
-didapatkan? , Apa hipotesis dan kesimpulan yang dapat diambil ?
-
-bartlett.test(Length~V1, data=dataoneway)
-
-4c. Untuk uji ANOVA (satu arah), buatlah model linier dengan Panjang
-qqnorm(group1$Length)
-qqline(group1$Length)
-
-4d. Dari Hasil Poin C, Berapakah nilai-p ? , Apa yang dapat Anda simpulkan
-dari H0?
-
-4e. Verifikasilah jawaban model 1 dengan Post-hoc test Tukey HSD, dari nilai p
-yang didapatkan apakah satu jenis kucing lebih panjang dari yang lain?
+#3f Kesimpulan
+kesimpulannya adalah 95% rata-rata saham di Bali dan di Bandung adalah sama.
