@@ -134,6 +134,8 @@ group1 <- subset(myFile, V1=="Kucing Oren")
 group2 <- subset(myFile, V1=="Kucing Hitam")
 group3 <- subset(myFile, V1=="Kucing Putih")
 ```
+![image](https://user-images.githubusercontent.com/94377420/170880432-98409352-c6e0-4b10-82cc-2d6412a24d93.png)
+
 
 #### 4b carilah atau periksalah Homogeneity of variances nya , Berapa nilai p yang didapatkan? , Apa hipotesis dan kesimpulan yang dapat diambil ?
 
@@ -151,4 +153,55 @@ qqline(group1$Length)
 #### 4d Dari Hasil Poin C, Berapakah nilai-p ? , Apa yang dapat Anda simpulkan dari H0?
 
 #### 4e Verifikasilah jawaban model 1 dengan Post-hoc test Tukey HSD, dari nilai p yang didapatkan apakah satu jenis kucing lebih panjang dari yang lain? Jelaskan.
+
+#### 5a Buatlah plot sederhana untuk visualisasi data
+```
+install.packages("multcompView")
+library(readr)
+library(ggplot2)
+library(multcompView)
+library(dplyr)
+
+GTL <- read_csv("GTL.csv")
+head(GTL)
+
+str(GTL)
+
+qplot(x = Temp, y = Light, geom = "point", data = GTL) +
+  facet_grid(.~Glass, labeller = label_both)
+```
+
+#### 5b Lakukan uji ANOVA dua arah
+```
+GTL$Glass <- as.factor(GTL$Glass)
+GTL$Temp_Factor <- as.factor(GTL$Temp)
+str(GTL)
+
+anova <- aov(Light ~ Glass*Temp_Factor, data = GTL)
+summary(anova)
+
+```
+#### 5c Tampilkan tabel dengan mean dan standar deviasi keluaran cahaya untuk setiap perlakuan (kombinasi kaca pelat muka dan suhu operasi)
+```
+data_summary <- group_by(GTL, Glass, Temp) %>%
+  summarise(mean=mean(Light), sd=sd(Light)) %>%
+  arrange(desc(mean))
+print(data_summary)
+```
+#### 5d Lakukan uji Tukey
+```
+tukey <- TukeyHSD(anova)
+print(tukey)
+```
+#### 5e Gunakan compact letter display untuk menunjukkan perbedaan signifikan antara uji Anova dan uji Tukey
+```
+tukey.cld <- multcompLetters4(anova, tukey)
+print(tukey.cld)
+
+cld <- as.data.frame.list(tukey.cld$`Glass:Temp_Factor`)
+data_summary$Tukey <- cld$Letters
+print(data_summary)
+
+write.csv("GTL_summary.csv")
+```
 
